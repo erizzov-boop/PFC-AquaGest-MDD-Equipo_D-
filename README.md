@@ -105,11 +105,45 @@ Una vez compilado correctamente, el proyecto estará listo para continuar con la
 
 # Compilar el informe
 
-1. Clonar Repositorio
-2. Comprimir carpeta docs en .zip
-3. Subir en overleaf
+[#compilar-el-informe](#compilar-el-informe)
 
+El informe se encuentra en `docs/informe.tex` y utiliza las referencias de
+`docs/referencias.bib`. Para compilarlo localmente:
 
+**Requisitos:** distribución LaTeX (TeX Live o MiKTeX) con `pdflatex` y `biber`
+disponibles en el PATH.
+
+1. Clonar el repositorio:
+
+​```
+git clone https://github.com/erizzov-boop/PFC-AquaGest-MDD-Equipo_D-.git
+​```
+
+​```
+cd PFC-AquaGest-MDD-Equipo_D-/docs
+​```
+
+2. Compilar (4 pasadas, necesarias para resolver referencias cruzadas,
+   bibliografía y el índice):
+
+**Paso 1 — primera pasada:**
+pdflatex informe.tex
+
+**Paso 2 — procesar bibliografía:**
+biber informe
+
+**Paso 3 — segunda pasada:**
+pdflatex informe.tex
+
+**Paso 4 — pasada final:**
+pdflatex informe.tex​
+
+3. El PDF resultante se genera como `docs/informe.pdf`.
+
+**Alternativa (Overleaf):** comprimir la carpeta `docs/` en `.zip`, subirla a
+Overleaf como proyecto nuevo, y compilar usando el motor **pdfLaTeX** desde el
+menú de configuración del proyecto (Overleaf ejecuta las pasadas
+automáticamente).
 
 ---
 
@@ -127,11 +161,13 @@ Link del video: https://youtu.be/nqC775C5jXs
 
 # Integrantes y responsabilidades
 
-| Integrante | Responsabilidad |
-|------------|-----------------|
-| Rizzo | Modelado UML (Diagrama de clases, generación de código y validación del modelo). |
-| Amagua | Diagramas de casos de uso, diagrama de estados y revisión del código generado. |
-| Crespo | Documentación en LaTeX, evidencias, repositorio GitHub y preparación de la exposición. |
+[#integrantes-y-responsabilidades](#integrantes-y-responsabilidades)
+
+| Integrante | Rol en la actividad MDD | Responsabilidad |
+| ---------- | ------------------------ | ---------------- |
+| Amagua Sacon Robyn Willian | Coordinación general, justificación de la herramienta | Coordina al equipo y los tiempos de la exposición, redacta la justificación de Modelio frente a las restricciones del PFC, y estructura/mantiene el documento evidencia en LaTeX. |
+| Crespo Espinoza Kleber Obed | Modelado UML en Modelio y documentación LaTeX | Construye los diagramas de clases, casos de uso y estados dentro de Modelio, aplica estereotipos y ejecuta la validación sintáctica/semántica del modelo. |
+| Rizzo Velez Edson Nagib | Configuración del generador, ejecución de la generación, verificación de código y cierre del ciclo | Configura los parámetros del módulo de generación, ejecuta el proceso de generación, verifica la compilación/ejecución del código generado y ejecuta el roundtrip controlado. |
 
 ---
 
