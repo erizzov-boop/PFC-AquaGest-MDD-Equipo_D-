@@ -1,0 +1,291 @@
+\documentclass[11pt,a4paper]{article}
+
+% ======================= PAQUETES =======================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows.meta}
+
+% ======================= COLORES INSTITUCIONALES =======================
+\definecolor{uteqgreen}{RGB}{0,102,68}
+\definecolor{uteqgray}{RGB}{90,90,90}
+
+% ======================= HIPERVÍNCULOS =======================
+\hypersetup{
+    colorlinks=true,
+    linkcolor=uteqgreen,
+    citecolor=uteqgreen,
+    urlcolor=blue,
+    pdftitle={Documento Evidencia MDD - Modelio - AquaGest},
+    pdfauthor={Equipo AquaGest - UTEQ}
+}
+
+% ======================= ENCABEZADOS =======================
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\small Ingeniería de Requisitos (ISR-401) -- UTEQ}
+\fancyhead[R]{\small MDD con Modelio -- Proyecto AquaGest}
+\fancyfoot[C]{\thepage}
+
+% ======================= TÍTULOS =======================
+\titleformat{\section}{\large\bfseries\color{uteqgreen}}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{uteqgray}}{\thesubsection}{1em}{}
+\titlespacing*{\section}{0pt}{1.4ex plus 0.5ex minus .2ex}{0.8ex plus .2ex}
+\titlespacing*{\subsection}{0pt}{1.1ex plus 0.4ex minus .2ex}{0.5ex plus .1ex}
+
+\setlength{\parskip}{0.35em}
+\setlength{\parindent}{0pt}
+
+\title{}
+\date{}
+
+\begin{document}
+
+% ======================= CARÁTULA =======================
+\begin{titlepage}
+\centering
+\vspace*{0.5cm}
+
+{\Large \bfseries UNIVERSIDAD TÉCNICA ESTATAL DE QUEVEDO}\\[0.3cm]
+{\large Facultad de Ciencias de la Computación y Diseño Digital}\\
+{\large Carrera de Ingeniería en Software}\\[1.2cm]
+
+
+\vspace{1.2cm}
+{\large \bfseries DOCUMENTO EVIDENCIA}\\[0.2cm]
+{\large Exposición con demostración práctica}\\[0.4cm]
+
+{\Large \bfseries ``Herramientas que generan código fuente a partir de modelos UML''}\\[0.3cm]
+{\large Ciclo completo Model-Driven Development (MDD) aplicado al Proyecto Fin de Curso (PFC)}\\[0.6cm]
+
+{\large \bfseries Herramienta seleccionada: MODELIO}\\[1cm]
+
+{\large \bfseries Caso de aplicación:}\\
+{\large AquaGest -- Sistema para la Gestión Inteligente de una Camaronera}\\[1.2cm]
+
+\begin{tabular}{ll}
+\textbf{Asignatura:} & Ingeniería de Requisitos (ISR-401) \\
+\textbf{Docente:} & Ing. Gleiston Guerrero Ulloa, PhD. \\
+\textbf{Período académico:} & 2026--2027 PPA \\
+\textbf{Paralelo:} & 4to ``A'' Software \\
+\end{tabular}
+
+\vspace{1cm}
+{\bfseries Integrantes:}\\
+Amagua Sacon Robyn Willian\\
+Crespo Espinoza Kleber Obed\\
+Rizzo Velez Edson Nagib\\
+
+
+\vspace{0.6cm}
+{\bfseries Repositorio GitHub de la actividad MDD (PFC-AquaGest-MDD-Equipo):}\\
+\sloppy \url{https://github.com/erizzov-boop/PFC-AquaGest-MDD-Equipo_D-}
+
+\vfill
+{\large Quevedo, Ecuador -- 2026--2027 PPA}
+\end{titlepage}
+
+\newpage
+
+% ======================= TABLA DE CONTENIDO =======================
+
+\tableofcontents
+\newpage
+
+% ======================= RESUMEN =======================
+\section*{Resumen}
+\addcontentsline{toc}{section}{Resumen}
+
+Este documento evidencia la exposición-demostración ``Herramientas que generan
+código fuente a partir de modelos UML'' de Ingeniería de Requisitos (ISR-401),
+UTEQ. El problema abordado es la ausencia, en el proceso actual del equipo, de
+un mecanismo automatizado que derive código Java desde los modelos UML del
+Proyecto Fin de Curso (PFC) \textbf{AquaGest}, sistema de gestión inteligente
+para una camaronera. La herramienta seleccionada es \textbf{Modelio} (código
+abierto), con su módulo Java Designer.
+
+El caso de aplicación es el subsistema \textbf{Control de Estanques, Siembras y
+Seguimiento}, modelado con seis clases (\texttt{Estanque}, \texttt{Siembra},
+\texttt{Empleado}, \texttt{SobrecargaSiembra}, \texttt{Grameo},
+\texttt{AlertaCrecimiento}) sobre RF-01 a RF-08 y RF-17, complementado con
+diagramas de casos de uso y de estados. El equipo construyó y validó el modelo
+(0 errores, 0 advertencias), generó código Java para las seis clases, verificó
+directamente el contenido de dos de ellas -- confirmando que el generador
+respeta la navegabilidad y multiplicidad de las asociaciones del modelo --, y
+ejecutó un \textit{roundtrip} controlado que confirmó que el generador
+sobrescribe el código sin preservar cambios manuales. Quedan pendientes:
+inspeccionar las cuatro clases restantes, el registro de commits por
+integrante y la exposición en vivo.
+
+
+
+
+
+% ======================= MARCO TEÓRICO =======================
+\section{Marco teórico}
+\label{sec:marco-teorico}
+
+\subsection{Model-Driven Engineering (MDE)}
+El paradigma de Ingeniería Dirigida por Modelos (\textit{Model-Driven Engineering},
+MDE) plantea que los modelos son artefactos de primera clase del desarrollo: el
+modelo es la fuente autoritativa del sistema, y las implementaciones se derivan de
+él mediante transformaciones automatizadas en lugar de escribirse manualmente
+\cite{schmidt2006,bucchiarone2020}.
+
+\subsection{Model-Driven Architecture (MDA)}
+\label{sec:mda}
+La Model-Driven Architecture (MDA), iniciativa del \textit{Object Management
+Group} (OMG), estructura el desarrollo en tres niveles: \textbf{CIM}
+(\textit{Computation Independent Model}, dominio y negocio), \textbf{PIM}
+(\textit{Platform Independent Model}, lógica independiente de plataforma) y
+\textbf{PSM} (\textit{Platform Specific Model}, ligado a una plataforma
+concreta), vinculados por transformaciones formales \cite{omg2014mda}.
+
+\subsection{Model-Driven Development (MDD)}
+El MDD es la aplicación práctica de MDE al ciclo de vida del software: los
+modelos guían la construcción del sistema y el código se obtiene, total o
+parcialmente, mediante generadores automáticos \cite{selic2003,brambilla2017}.
+A diferencia de MDA, MDD no exige necesariamente la pila completa de
+especificaciones OMG.
+
+\subsection{Transformaciones M2M y M2T}
+\begin{itemize}[leftmargin=1.5em,itemsep=0.2em]
+    \item \textbf{Modelo-a-modelo (M2M):} produce un modelo destino a partir de
+    uno de origen (p. ej. PIM $\rightarrow$ PSM). Estándar OMG: QVT
+    (\textit{Query/View/Transformation}) v1.3 \cite{omg2016qvt}.
+    \item \textbf{Modelo-a-texto (M2T):} produce artefactos textuales -- código
+    fuente, configuración, documentación -- a partir de un modelo. Estándar
+    OMG: MOFM2T v1.0 \cite{omg2008mofm2t}. La generación de código que Modelio
+    realiza a partir del diagrama de clases de AquaGest corresponde,
+    conceptualmente, a esta categoría.
+\end{itemize}
+
+\subsection{Metamodelo y perfiles UML}
+Un metamodelo define la sintaxis abstracta de un lenguaje de modelado; UML se
+define sobre MOF (\textit{Meta Object Facility}), especificación vigente UML
+2.5.1 \cite{omg2017uml}. Los generadores operan sobre las clases, atributos,
+asociaciones y estereotipos del metamodelo. Los \textbf{perfiles UML} extienden
+el metamodelo con estereotipos y restricciones de dominio o plataforma (p. ej.
+un perfil de persistencia JPA/Hibernate), que los generadores explotan para
+producir código específico.
+
+\subsection{Forward, reverse y round-trip engineering}
+\textit{Forward engineering}: el código se genera a partir del modelo.
+\textit{Reverse engineering}: el modelo se reconstruye a partir del código.
+\textit{Round-trip engineering}: ambas direcciones se mantienen sincronizadas de
+forma controlada. Esta actividad cubre la generación \textit{forward} y
+evidencia, de forma controlada, que un cambio en el modelo se refleja en el
+código tras regenerar (Sección \ref{sec:roundtrip}).
+
+\subsection{Diagramas UML admisibles como origen de la generación}
+El diagrama de clases es obligatorio como base de la generación estructural.
+Se admiten como complemento el diagrama de casos de uso, el de estados y el de
+secuencia, siempre que aporten a la generación o a la comprensión del
+subsistema.
+
+\subsection{Estado del arte}
+El campo de las transformaciones de modelos cuenta con más de sesenta
+herramientas catalogadas \cite{kahani2019}, con retos abiertos en
+escalabilidad, interoperabilidad y adopción industrial de MDD
+\cite{bucchiarone2020}. La adopción de MDE en la industria es aún heterogénea
+\cite{whittle2014}, lo que refuerza documentar con precisión las decisiones de
+mapeo modelo-código de este proyecto.
+
+% ======================= JUSTIFICACIÓN DE LA HERRAMIENTA =======================
+\section{Justificación de la selección de la herramienta}
+\label{sec:justificacion}
+
+\subsection{Restricciones tecnológicas del PFC que condicionan la selección}
+De acuerdo con la ERS de AquaGest (Secciones 2.5, 2.6 y 3.4), el PFC establece las
+siguientes restricciones relevantes para elegir una herramienta MDD
+\cite{aquagest2026}:
+\begin{itemize}[leftmargin=1.5em]
+    \item Arquitectura cliente-servidor con API REST (RST-05).
+    \item Base de datos relacional, PostgreSQL o MySQL, sin motores NoSQL como
+    almacenamiento principal (RST-01).
+    \item Priorización de \textbf{software libre y de código abierto} por
+    restricción presupuestaria (RST-04, Sección 2.6).
+    \item Backend orientado a un lenguaje de propósito general con soporte maduro de
+    frameworks web y ORM (la Sección 2.5 de la ERS no fija un lenguaje único; el
+    equipo ratificó \textbf{Java} como lenguaje objetivo definitivo para esta
+    actividad, ver más adelante en esta misma sección, ``Versión de la herramienta y
+    dependencias'').
+\end{itemize}
+
+\subsection{Características de Modelio relevantes para AquaGest}
+\textbf{Modelio} es un entorno de modelado desarrollado por Modeliosoft
+(París); su núcleo es de código abierto (GPLv3 desde 2011), y sus módulos de
+extensión se distribuyen bajo Apache License 2.0 \cite{modelio2024wiki}. Esta
+condición de herramienta libre satisface la restricción presupuestaria RST-04
+del PFC, a diferencia de alternativas comerciales como Enterprise Architect o
+Visual Paradigm.
+
+Modelio soporta de forma nativa UML2, BPMN2 y ArchiMate, y es extensible
+mediante módulos del \textit{Modelio Store} \cite{modelio_org}. El módulo
+oficial \textbf{Java Designer / SD Java} genera código Java a partir de
+diagramas de clases UML, con sincronización modelo-código en modo dirigido por
+modelo o \textit{round-trip}, integrándose con IDEs como Eclipse, NetBeans o
+IntelliJ \cite{modelio_sd_java}. Modelio soporta además generación y
+reingeniería para \textbf{C++, C\# y SQL} \cite{modelio_codegen}, lo que
+permitiría en una futura extensión generar el esquema relacional (SQL) desde el
+mismo diagrama de clases, coherente con RST-01 (base de datos relacional).
+Modelio es además multiplataforma (Linux, Windows, macOS)
+\cite{modelio2024wiki}, sin costos de licenciamiento adicionales para el
+equipo.
+
+\subsection{Comparación con una alternativa descartada}
+Como contraste, se evaluó también \textbf{Papyrus + Acceleo} (ecosistema Eclipse)
+como alternativa. Papyrus/Acceleo tiene la ventaja de
+implementar directamente el estándar OMG MOFM2T mediante plantillas \texttt{.mtl}
+explícitas, lo que ofrece mayor control fino sobre el mapeo modelo-código. Sin
+embargo, se descartó para esta demostración porque exige una curva de aprendizaje
+mayor (instalación de un stack Eclipse completo, aprendizaje del lenguaje Acceleo) en
+comparación con los generadores ya empaquetados de Modelio, y porque el equipo no
+cuenta con experiencia previa en Acceleo, lo que habría comprometido el tiempo
+disponible para completar el ciclo MDD dentro del cronograma de la actividad.
+
+\subsection{Versión de la herramienta y dependencias}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Versión de Modelio utilizada:} 5.4 (Modelio Open Source),
+    confirmada en la barra de título de la herramienta (Figuras
+    \ref{fig:validacion-modelo}, \ref{fig:codigo-intellij}).
+    \item \textbf{Módulo de generación instalado:} Modelio Java Designer (SD
+    Java), instalado desde el Modelio Store -- versión: \textbf{5.4}.
+    \item \textbf{Lenguaje objetivo definitivo:} Java estándar (POJOs). Esta
+    actividad se limita a la generación de clases Java a partir del modelo UML,
+    sin persistencia (no se usa JPA/Hibernate ni ningún ORM); la persistencia
+    hacia la base de datos relacional del PFC (RST-01) se resolverá en una fase
+    de diseño detallado posterior, fuera del alcance de esta demostración MDD.
+    \item \textbf{SDK/compilador requerido en el entorno del generado:} JDK 17
+    (LTS).
+\end{itemize}
+
+
+
+
+
+% ======================= REFERENCIAS =======================
+\addcontentsline{toc}{section}{Referencias}
+\bibliographystyle{ieeetr}
+\bibliography{referencias}
+
+\end{document}
