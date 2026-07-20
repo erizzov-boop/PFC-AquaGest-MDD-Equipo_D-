@@ -12,7 +12,7 @@ El sistema completo abarca diez módulos funcionales: Gestión de Estanques, Con
 
 ## Descripción del subsistema modelado: Control de Estanques, Siembras y Seguimiento
 
-**Por qué se eligió este subsistema:** es la base operativa sobre la que se apoya el resto del ciclo productivo — el monitoreo de agua, la alimentación, la sanidad y la cosecha solo tienen sentido si ya existe un estanque con una siembra activa. Es el módulo con mayor conectividad hacia el resto del sistema.
+**Por qué se eligió este subsistema:** Es la base operativa sobre la que se apoya el resto del ciclo productivo — el monitoreo de agua, la alimentación, la sanidad y la cosecha solo tienen sentido si ya existe un estanque con una siembra activa. Es el módulo con mayor conectividad hacia el resto del sistema.
 
 **Actores involucrados:**
 
@@ -26,7 +26,7 @@ El sistema completo abarca diez módulos funcionales: Gestión de Estanques, Con
 
 **Requisitos funcionales cubiertos:** RF-01 a RF-08 (registro de estanque, cálculo de capacidad, sobrecarga controlada, actualización de estado, registro de siembra, grameo semanal, historial de crecimiento, alerta de crecimiento) y RF-17 (registro de empleados, en su rol de responsables de siembra).
 
-**Alcance de la demostración:** las seis clases de dominio — Estanque, Siembra, Empleado (como responsable), SobrecargaSiembra, Grameo y AlertaCrecimiento — con sus atributos, operaciones y relaciones de asociación, agregación y composición.
+**Alcance de la demostración:** Las seis clases de dominio — Estanque, Siembra, Empleado (como responsable), SobrecargaSiembra, Grameo y AlertaCrecimiento — con sus atributos, operaciones y relaciones de asociación, agregación y composición.
 
 **Queda explícitamente fuera de esta demostración puntual:** Monitoreo del Agua, Alimentación, Historial Sanitario (más allá de lo ya cubierto), Inventario, Mantenimiento, Cosecha, Reportes e Inteligencia Artificial — módulos que sí están en el ERS del PFC completo, pero no forman parte del subsistema elegido para esta generación de código.
 
@@ -107,30 +107,11 @@ Una vez compilado correctamente, el proyecto estará listo para continuar con la
 
 # Compilar el informe
 
-El informe fue elaborado en LaTeX.
+1. Clonar Repositorio
+2. Comprimir carpeta docs en .zip
+3. Subir en overleaf
 
-Compilar utilizando:
 
-```
-pdflatex
-```
-
-Ejecutar **dos pasadas** para actualizar correctamente las referencias cruzadas y la numeración de figuras.
-
-Secuencia recomendada:
-
-```bash
-pdflatex informe.tex
-bibtex informe
-pdflatex informe.tex
-pdflatex informe.tex
-```
-
-El resultado será:
-
-```
-informe.pdf
-```
 
 ---
 
@@ -142,7 +123,7 @@ El video demostrativo se encuentra en:
 evidencias/video-demo.mp4
 ```
 
-Si el video se encuentra alojado externamente, reemplazar esta sección por el enlace correspondiente.
+Link del video:
 
 ---
 
@@ -150,9 +131,9 @@ Si el video se encuentra alojado externamente, reemplazar esta sección por el e
 
 | Integrante | Responsabilidad |
 |------------|-----------------|
-| Integrante 1 | Modelado UML (Diagrama de clases, generación de código y validación del modelo). |
-| Integrante 2 | Diagramas de casos de uso, diagrama de estados y revisión del código generado. |
-| Integrante 3 | Documentación en LaTeX, evidencias, repositorio GitHub y preparación de la exposición. |
+| Rizzo | Modelado UML (Diagrama de clases, generación de código y validación del modelo). |
+| Amagua | Diagramas de casos de uso, diagrama de estados y revisión del código generado. |
+| Crespo | Documentación en LaTeX, evidencias, repositorio GitHub y preparación de la exposición. |
 
 ---
 
