@@ -849,6 +849,55 @@ Rizzo Velez Edson Nagib & PENDIENTE \\
 \end{center}
 
 
+
+
+
+% ======================= CONCLUSIONES =======================
+\section{Conclusiones}
+\label{sec:conclusiones}
+
+\subsection{Valor del ciclo MDD para el PFC AquaGest}
+La aplicación del ciclo MDD con Modelio sobre el subsistema de Control de
+Estanques, Siembras y Seguimiento permite verificar, de forma concreta, que el
+modelo de dominio (clases \texttt{Estanque}, \texttt{Siembra}, \texttt{Empleado},
+\texttt{SobrecargaSiembra}, \texttt{Grameo} y \texttt{AlertaCrecimiento}, con
+base en los RF-01 a RF-08 y RF-17 ya formalizados y validados con el stakeholder
+de la Compañía Biofina) es suficientemente preciso como para derivar de él una
+base de código estructural, reduciendo el riesgo de que la implementación
+posterior del PFC se desvíe de esos requisitos. La verificación directa del
+código generado (Sección \ref{sec:correspondencia}) confirmó que Modelio Java
+Designer respeta fielmente la navegabilidad y la multiplicidad definidas en el
+modelo, lo que refuerza la confiabilidad del ciclo MDD como punto de partida
+para el desarrollo posterior del PFC, sin eximir de completar manualmente la
+lógica de negocio (Sección \ref{sec:limitaciones}).
+
+\subsection{Aprendizajes obtenidos}
+
+La ejecución de la transformación modelo a código permitió comprobar que
+Modelio Java Designer genera automáticamente la estructura básica de las clases
+Java a partir del modelo UML, incluyendo atributos, identificador autogenerado,
+colecciones para las asociaciones y firmas de operación, respetando la
+navegabilidad y la multiplicidad definidas en cada relación del diagrama de
+clases (por ejemplo, la colección \texttt{List<Empleado>} generada en
+\texttt{Siembra.java} es consistente con la multiplicidad 1 a 0..* modelada
+para esa asociación). La ejecución del \textit{roundtrip} controlado (Sección
+\ref{sec:roundtrip}) permitió además comprobar en la práctica que Modelio Java
+Designer, con la configuración usada, no preserva código manual entre
+regeneraciones -- un hallazgo directamente relevante para decidir cómo
+organizar el código del PFC en fases posteriores.
+
+\subsection{Limitaciones}
+El código generado por Modelio Java Designer corresponde a un esqueleto de
+implementación: los cuerpos de los métodos se generan vacíos y la lógica de
+negocio debe desarrollarse manualmente. La generación automática depende
+además de que la navegabilidad y la multiplicidad de cada asociación estén
+correctamente definidas en el modelo, ya que se trasladan de forma directa al
+código generado (por ejemplo, a colecciones \texttt{List<...>} en el extremo
+``muchos'' de cada relación). Finalmente, esta demostración cubrió la
+generación \textit{forward} y un \textit{roundtrip} de un único ciclo (un
+cambio, una regeneración); no se evaluó el comportamiento del generador ante
+cambios más complejos o simultáneos en varias clases a la vez.
+
 % ======================= REFERENCIAS =======================
 \addcontentsline{toc}{section}{Referencias}
 \bibliographystyle{ieeetr}
