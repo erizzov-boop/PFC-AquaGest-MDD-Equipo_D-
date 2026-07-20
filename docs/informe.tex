@@ -570,6 +570,283 @@ plantilla personalizados. Si en una futura iteración del PFC se decide
 personalizar la plantilla (por ejemplo, para incorporar anotaciones JPA), esta
 subsección deberá actualizarse.
 
+% ======================= PROCESO DE GENERACIÓN =======================
+\section{Proceso de generación}
+\label{sec:proceso-generacion}
+
+Esta sección documenta la ejecución de la generación de código y su verificación
+inicial, y debe completarse íntegramente con evidencia tomada durante la
+demostración en vivo. Se mantiene aquí la estructura prevista de los tres
+subapartados para que el equipo únicamente deba insertar, en su momento, las
+capturas y los datos reales observados.
+
+\subsection{Invocación del generador}
+Captura de pantalla de la invocación del generador dentro de
+Modelio (menú de generación de código sobre el paquete/clases del subsistema
+Control de Estanques y Siembras). Modelio Java Designer no despliega una consola
+de log: al invocar \textit{Generate}, el proceso corre y finaliza sin mostrar
+ventana ni mensaje de salida; la confirmación de éxito se obtiene directamente del
+árbol de archivos resultante (ver subapartado siguiente).
+ \begin{figure}[h!]
+   \centering
+   \includegraphics[width=0.62\linewidth]{figuras/generador_codigo_java_designer.png}
+   \caption{Invocación del generador de código en Modelio.}
+ \end{figure}
+
+\subsection{Árbol del proyecto generado}
+La generación produjo seis archivos Java, uno por cada clase del subsistema, en la
+carpeta de salida \texttt{MODELIOJAVA} (Figura \ref{fig:archivos-generados}):
+\texttt{Estanque.java}, \texttt{Siembra.java}, \texttt{SobrecargaSiembra.java},
+\texttt{Grameo.java}, \texttt{AlertaCrecimiento.java} y \texttt{Empleado.java}.
+ \begin{figure}[h!]
+   \centering
+   \includegraphics[width=0.68\linewidth]{figuras/archivos_generados.png}
+   \caption{Árbol de archivos \texttt{.java} generados por Modelio Java Designer
+   en la carpeta \texttt{MODELIOJAVA}.}
+   \label{fig:archivos-generados}
+ \end{figure}
+
+\subsection{Tiempos de generación}
+Los seis archivos generados muestran la misma marca de tiempo de modificación (\texttt{18/7/2026 14:39}) y un tamaño uniforme de 1 KB cada uno (Figura \ref{fig:archivos-generados}), lo que evidencia que la generación del código se realizó de forma prácticamente instantánea para las seis clases del subsistema.
+
+
+% ======================= VERIFICACIÓN DEL CÓDIGO =======================
+\section{Verificación del código generado}
+\label{sec:verificacion}
+
+\subsection{Evidencia de compilación y ejecución}
+
+El código generado se abrió en \textbf{IntelliJ IDEA}, dentro del proyecto
+\texttt{MODELIOJAVA}. El inspector estático del IDE no reporta problemas sobre la
+clase \texttt{AlertaCrecimiento.java} (``No problems in AlertaCrecimiento.java'',
+Figura \ref{fig:codigo-intellij}), lo que confirma que ese archivo es
+sintácticamente válido.
+
+\begin{figure}[h!]
+   \centering
+   \includegraphics[width=0.68\linewidth]{figuras/codigo_generado_en_IntelliJ.png}
+  \caption{Clase \texttt{AlertaCrecimiento.java} generada, abierta en IntelliJ IDEA
+  sin problemas reportados por el inspector estático.}
+  \label{fig:codigo-intellij}
+ \end{figure}
+
+\subsection{Correspondencia modelo $\rightarrow$ código}
+\label{sec:correspondencia}
+La existencia de los seis archivos \texttt{.java} está confirmada por el árbol de
+archivos generado (Figura \ref{fig:archivos-generados}, Sección
+\ref{sec:proceso-generacion}). El contenido detallado se inspeccionó
+directamente para dos clases: \texttt{AlertaCrecimiento.java} (Figura
+\ref{fig:codigo-intellij}) y \texttt{Siembra.java}, esta última visible en las
+capturas del \textit{roundtrip} (Figuras \ref{fig:roundtrip-antes} y
+\ref{fig:roundtrip-regeneracion}, Sección \ref{sec:roundtrip}). Para las tres
+clases restantes (\texttt{Estanque}, \texttt{Empleado}, \texttt{Grameo},
+\texttt{SobrecargaSiembra}) aún debe abrirse cada archivo y contrastarlo con
+esta tabla.
+
+\begin{center}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.7cm}XX}
+\toprule
+\textbf{Elemento del modelo} & \textbf{Artefacto generado esperado} &
+\textbf{Verificado} \\
+\midrule
+Clase \texttt{Estanque} & Archivo \texttt{Estanque.java} & Sí (archivo existe) \\
+Clase \texttt{Siembra} & Archivo \texttt{Siembra.java} & \textbf{Sí, verificado
+en código}: campos \texttt{fecha}, \texttt{cantidadLarvas}, \texttt{tipoLarva},
+\texttt{laboratorioOrigen}, \texttt{id} (autogenerado). \\
+Clase \texttt{Grameo} & Archivo \texttt{Grameo.java} & Sí (archivo existe) \\
+Clase \texttt{Empleado} & Archivo \texttt{Empleado.java} & Sí (archivo existe) \\
+Clase \texttt{SobrecargaSiembra} & Archivo \texttt{SobrecargaSiembra.java} &
+Sí (archivo existe) \\
+Clase \texttt{AlertaCrecimiento} & Archivo \texttt{AlertaCrecimiento.java} &
+\textbf{Sí, verificado en código}: campos \texttt{fecha}, \texttt{pesoEsperado},
+\texttt{pesoObservado}, \texttt{estado}, \texttt{id} y métodos
+\texttt{generarAlerta()}, \texttt{atenderAlerta()} coinciden 1:1 con el modelo. \\
+Atributo \texttt{Estanque.tamanoHa} & Campo \texttt{tamanoHa} + accesores &
+Pendiente (falta abrir \texttt{Estanque.java}) \\
+Asociación Estanque--Siembra & Colección \texttt{List<Siembra>} en
+\texttt{Estanque.java} & Pendiente -- \texttt{Siembra.java} no contiene una
+referencia de vuelta a \texttt{Estanque} (coherente con una asociación
+unidireccional 1 a 0..*), pero el lado ``1'' (\texttt{Estanque.java}) no ha
+sido inspeccionado. \\
+Asociación Siembra--Grameo & Colección \texttt{List<Grameo>} en
+\texttt{Siembra.java} & \textbf{Sí, verificado en código}: se generó
+\texttt{public List<Grameo>} en \texttt{Siembra.java}. \\
+Asociación Siembra--Empleado (responsables) & Colección \texttt{List<Empleado>}
+en \texttt{Siembra.java} & \textbf{Sí, verificado en código}: se generó
+\texttt{public List<Empleado>} en \texttt{Siembra.java}, coherente con la
+navegabilidad Siembra $\rightarrow$ Empleado y la multiplicidad 1 a 0..* del
+modelo (una siembra puede tener más de un empleado responsable). \\
+Agregación Siembra--SobrecargaSiembra & Colección
+\texttt{List<SobrecargaSiembra>} en \texttt{Siembra.java} & \textbf{Sí,
+verificado en código}: se generó \texttt{public List<SobrecargaSiembra>} en
+\texttt{Siembra.java}. \\
+Composición Grameo--AlertaCrecimiento & Referencia \texttt{AlertaCrecimiento} en
+\texttt{Grameo.java} & Pendiente (falta abrir \texttt{Grameo.java}) \\
+Operación \texttt{registrarSiembra()} & Firma de método en \texttt{Siembra.java} &
+\textbf{Sí, verificado en código}: existe como \texttt{public void
+registrarSiembra()} con cuerpo vacío (ver Sección \ref{sec:roundtrip} para la
+prueba de sobrescritura tras regenerar). \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Queda pendiente, antes de la exposición, abrir en IntelliJ los archivos
+\texttt{Estanque.java}, \texttt{Grameo.java}, \texttt{Empleado.java} y
+\texttt{SobrecargaSiembra.java}, y repetir sobre ellos la misma inspección ya
+hecha con \texttt{Siembra.java} y \texttt{AlertaCrecimiento.java}.
+
+\subsection{Limitaciones observadas del generador}
+\label{sec:limitaciones}
+A partir de la revisión directa de \texttt{AlertaCrecimiento.java} y
+\texttt{Siembra.java} se verificó que el generador produce correctamente la
+estructura básica de una clase (atributos tipados, identificador autogenerado y
+firmas de operación) a partir del modelo UML. Los cuerpos de las operaciones
+(\texttt{generarAlerta()}, \texttt{atenderAlerta()}, \texttt{registrarSiembra()})
+se generaron \textbf{vacíos}: la implementación de la lógica de negocio debe
+desarrollarse manualmente. Este comportamiento es consistente con el
+funcionamiento esperado de un generador de código estructural, cuyo objetivo es
+producir la estructura del sistema y no la implementación de sus reglas de
+negocio.
+
+Se confirmó también que la asociación Siembra--Empleado se refleja
+correctamente como \texttt{public List<Empleado>} en \texttt{Siembra.java},
+coherente con la navegabilidad Siembra $\rightarrow$ Empleado y la
+multiplicidad 1 a 0..* definida en el modelo (Sección
+\ref{sec:diagrama-clases}): una siembra puede tener más de un empleado
+responsable.
+
+Finalmente, las validaciones propias de los requisitos funcionales, como la
+verificación de que la cantidad de larvas no supere la capacidad máxima de
+siembra establecida por el requisito funcional RF-05, no son implementadas
+automáticamente por Modelio y deben incorporarse manualmente durante la etapa de
+desarrollo.
+
+
+% ======================= CIERRE DEL CICLO (ROUNDTRIP) =======================
+\section{Cierre del ciclo (\textit{roundtrip} controlado)}
+\label{sec:roundtrip}
+
+\subsection{Cambio propuesto en el modelo}
+Como cambio no trivial para evidenciar el cierre del ciclo MDD, se propone agregar
+un nuevo atributo a la clase \texttt{Siembra}: \texttt{porcentajeSupervivenciaInicial:
+double}, que registra el porcentaje estimado de supervivencia de las larvas al
+momento de la siembra (dato mencionado como relevante en el acta de entrevista con el
+Técnico Acuícola, Apéndice B.3 del ERS de AquaGest, aunque todavía no formalizado
+como RF independiente). Este cambio es representativo porque:
+\begin{itemize}[leftmargin=1.5em]
+    \item No es un cambio trivial de tipo tipográfico, sino la incorporación de un
+    dato de negocio nuevo.
+    \item Debe reflejarse tanto en el modelo (nuevo atributo con su tipo) como en el
+    código generado (nuevo campo).
+    \item Permite verificar si el módulo de generación preserva el código
+    manualmente añadido en los métodos ya completados en la Fase 5, o si lo
+    sobrescribe.
+\end{itemize}
+
+\subsection{Evidencia antes/después}
+\begin{itemize}[leftmargin=1.5em]
+    \item Captura del modelo \textbf{antes} del cambio (diagrama de clases con
+    \texttt{Siembra} en su versión original).
+    \item Captura del modelo \textbf{después} del cambio, con el nuevo atributo agregado (observaciones).
+
+\end{itemize}
+
+% Pendiente: capturas antes/después del modelo y del código.
+ \begin{figure}[h!]
+   \centering
+   \includegraphics[width=0.48\linewidth]{figuras/ControlEstanquesSiembras Class diagram.png}
+   \includegraphics[width=0.48\linewidth]{figuras/Diagrama_despues.png}
+   \caption{Modelo antes y después del cambio en \texttt{Siembra}.}
+ \end{figure}
+ \vspace{1.5cm}
+ \begin{itemize}[leftmargin=1.5em]
+    \item Captura del código generado \textbf{antes} de la regeneración.
+    \item Captura del código generado \textbf{después} de la regeneración, mostrando
+    el nuevo campo.
+\end{itemize}
+
+ \begin{figure}[h!]
+  \centering
+   \includegraphics[width=0.48\linewidth]{figuras/antes_codigo_clase.png}
+   \includegraphics[width=0.48\linewidth]{figuras/despues_codigo_clase.png}
+   \caption{Código Java de \texttt{Siembra} generado por Modelio, antes y
+   después de la regeneración con el nuevo atributo
+   \texttt{porcentajeSupervivenciaInicial} agregado en el modelo.}
+   \label{fig:roundtrip-antes}
+ \end{figure}
+
+\subsection{Manejo de bloques protegidos}
+
+Modelio Java Designer, en el modo de generación utilizado en esta actividad, \textbf{no implementa bloques de código protegido} (\textit{protected regions}) que preserven automáticamente la lógica de negocio agregada manualmente entre una generación y la siguiente. Como se documentó en la Sección \ref{sec:configuracion} (``Política ante regeneración''), cada ejecución del generador \textbf{sobrescribe por completo} el archivo \texttt{.java} correspondiente con el contenido derivado del modelo.
+
+En consecuencia, para evitar la pérdida de trabajo manual al regenerar el código, se recomienda adoptar una de las siguientes estrategias:
+
+\begin{enumerate}[leftmargin=1.5em]
+    \item \textbf{Respaldo manual:} copiar fuera del árbol \texttt{MODELIOJAVA} la lógica de negocio implementada antes de regenerar el código y reincorporarla posteriormente mediante copia/pegado o utilizando un sistema de control de versiones.
+
+    \item \textbf{Separación en clases de servicio (recomendada):} trasladar la lógica de negocio a clases de servicio o utilitarias independientes, fuera del árbol de clases de dominio generado por Modelio, de modo que la regeneración de \texttt{Estanque}, \texttt{Siembra}, \texttt{Grameo}, \texttt{AlertaCrecimiento}, \texttt{SobrecargaSiembra} y \texttt{Empleado} no afecte dicha lógica. Esta estrategia resulta adecuada para el desarrollo posterior del PFC y es coherente con la arquitectura cliente-servidor por capas definida en la restricción RST-05 de la ERS.
+\end{enumerate}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.48\linewidth]{figuras/antes_metodo_modificado.png}
+    \hfill
+    \includegraphics[width=0.48\linewidth]{figuras/despues_regeneraion.png}
+    \caption{Código generado antes (con una modificación manual en el método \texttt{registrarSiembra()}) y después de la regeneración desde Modelio. Se observa que la modificación manual fue reemplazada por el código generado automáticamente.}
+    \label{fig:roundtrip-regeneracion}
+\end{figure}
+
+La Figura \ref{fig:roundtrip-regeneracion} evidencia que, tras modificar manualmente el método \texttt{registrarSiembra()} y ejecutar nuevamente la generación de código, los cambios realizados fueron sobrescritos. Esto confirma que Modelio Java Designer, con la configuración utilizada en esta práctica, no preserva automáticamente las modificaciones manuales mediante bloques protegidos, por lo que es necesario respaldar el código o separar la lógica de negocio en clases no generadas antes de regenerar el proyecto.
+
+\subsection{Trazabilidad modelo $\rightarrow$ código tras el cambio}
+
+A pesar de que la regeneración sobrescribe las modificaciones manuales realizadas en los archivos \texttt{.java}, la trazabilidad entre el modelo UML y el código generado se mantuvo durante la práctica. Después de realizar modificaciones en el modelo de Modelio y ejecutar nuevamente la generación de código, se verificó que los cambios definidos en el modelo fueron reflejados correctamente en los archivos Java correspondientes. Asimismo, se comprobó que la correspondencia entre clases, atributos, operaciones y relaciones se conservó tras la regeneración. La Tabla presentada en la Sección \ref{sec:correspondencia} resume la verificación de dicha trazabilidad.
+
+% ======================= REPARTO DEL TRABAJO =======================
+\section{Reparto del trabajo por integrante}
+\label{sec:reparto}
+
+La distribución de tareas para esta actividad corresponde al equipo asignado a la
+exposición-demostración MDD, integrado por tres miembros.
+
+\begin{center}
+\begin{tabularx}{\linewidth}{p{3cm}XX}
+\toprule
+\textbf{Integrante} & \textbf{Rol en la actividad MDD} & \textbf{Tarea concreta
+asignada} \\
+\midrule
+Amagua Sacon Robyn Willian & Coordinación general, justificación de la herramienta
+& Coordina al equipo y los tiempos de la exposición, redacta
+la justificación de Modelio frente a las restricciones del PFC (Sección
+\ref{sec:justificacion}), y estructura/mantiene este documento evidencia en LaTeX. \\
+Crespo Espinoza Kleber Obed & Modelado UML en Modelio y documentación LaTeX &
+Construye los diagramas de clases, casos de uso y estados dentro de Modelio
+(Sección \ref{sec:modelo-uml}), aplica estereotipos y ejecuta la validación
+sintáctica/semántica del modelo. \\
+Rizzo Velez Edson Nagib & Configuración del generador, ejecución de la generación,
+verificación de código y cierre del ciclo & Configura los parámetros del módulo de
+generación (Sección \ref{sec:configuracion}), ejecuta el proceso de generación
+(Sección \ref{sec:proceso-generacion}), verifica la compilación/ejecución del
+código generado (Sección \ref{sec:verificacion}) y ejecuta el \textit{roundtrip}
+controlado documentado en la Sección \ref{sec:roundtrip}. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Commits diferenciados por integrante}
+Se registra a continuación la lista de commits atribuibles a cada integrante.
+
+\begin{center}
+\begin{tabularx}{\linewidth}{lX}
+\toprule
+\textbf{Integrante} & \textbf{URL(s) de commit(s) en GitHub} \\
+\midrule
+Amagua Sacon Robyn Willian & PENDIENTE \\
+Crespo Espinoza Kleber Obed & PENDIENTE \\
+Rizzo Velez Edson Nagib & PENDIENTE \\
+\bottomrule
+\end{tabularx}
+\end{center}
 
 
 % ======================= REFERENCIAS =======================
