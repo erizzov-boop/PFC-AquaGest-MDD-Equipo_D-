@@ -690,11 +690,7 @@ prueba de sobrescritura tras regenerar). \\
 \end{tabularx}
 \end{center}
 
-Queda pendiente, antes de la exposición, abrir en IntelliJ los archivos
-\texttt{Estanque.java}, \texttt{Grameo.java}, \texttt{Empleado.java} y
-\texttt{SobrecargaSiembra.java}, y repetir sobre ellos la misma inspección ya
-hecha con \texttt{Siembra.java} y \texttt{AlertaCrecimiento.java}.
-
+\newpage
 \subsection{Limitaciones observadas del generador}
 \label{sec:limitaciones}
 A partir de la revisión directa de \texttt{AlertaCrecimiento.java} y
@@ -742,7 +738,7 @@ como RF independiente). Este cambio es representativo porque:
     manualmente añadido en los métodos ya completados en la Fase 5, o si lo
     sobrescribe.
 \end{itemize}
-
+\newpage
 \subsection{Evidencia antes/después}
 \begin{itemize}[leftmargin=1.5em]
     \item Captura del modelo \textbf{antes} del cambio (diagrama de clases con
@@ -758,7 +754,7 @@ como RF independiente). Este cambio es representativo porque:
    \includegraphics[width=0.48\linewidth]{figuras/Diagrama_despues.png}
    \caption{Modelo antes y después del cambio en \texttt{Siembra}.}
  \end{figure}
- \vspace{1.5cm}
+
  \begin{itemize}[leftmargin=1.5em]
     \item Captura del código generado \textbf{antes} de la regeneración.
     \item Captura del código generado \textbf{después} de la regeneración, mostrando
@@ -801,7 +797,7 @@ La Figura \ref{fig:roundtrip-regeneracion} evidencia que, tras modificar manualm
 \subsection{Trazabilidad modelo $\rightarrow$ código tras el cambio}
 
 A pesar de que la regeneración sobrescribe las modificaciones manuales realizadas en los archivos \texttt{.java}, la trazabilidad entre el modelo UML y el código generado se mantuvo durante la práctica. Después de realizar modificaciones en el modelo de Modelio y ejecutar nuevamente la generación de código, se verificó que los cambios definidos en el modelo fueron reflejados correctamente en los archivos Java correspondientes. Asimismo, se comprobó que la correspondencia entre clases, atributos, operaciones y relaciones se conservó tras la regeneración. La Tabla presentada en la Sección \ref{sec:correspondencia} resume la verificación de dicha trazabilidad.
-
+\newpage
 % ======================= REPARTO DEL TRABAJO =======================
 \section{Reparto del trabajo por integrante}
 \label{sec:reparto}
@@ -836,17 +832,83 @@ controlado documentado en la Sección \ref{sec:roundtrip}. \\
 \subsection{Commits diferenciados por integrante}
 Se registra a continuación la lista de commits atribuibles a cada integrante.
 
-\begin{center}
-\begin{tabularx}{\linewidth}{lX}
+
+
+\begin{tabularx}{\textwidth}{
+>{\raggedright\arraybackslash}p{0.14\textwidth}
+>{\raggedright\arraybackslash}X
+>{\raggedright\arraybackslash}p{0.26\textwidth}
+}
 \toprule
-\textbf{Integrante} & \textbf{URL(s) de commit(s) en GitHub} \\
+\textbf{Integrante} & \textbf{Contribución (mensaje del commit)} & \textbf{URL del commit} \\
 \midrule
-Amagua Sacon Robyn Willian & PENDIENTE \\
-Crespo Espinoza Kleber Obed & PENDIENTE \\
-Rizzo Velez Edson Nagib & PENDIENTE \\
+
+% --- Amagua Sacon Robyn Willian ---
+Amagua Sacon Robyn Willian &
+\begin{itemize}[leftmargin=*,nosep,itemsep=2pt]
+    \item \textbf{Add files via upload.} Documento en LaTeX que reúne la evidencia del trabajo realizado con Modelio para generar código a partir de diagramas UML en el proyecto AquaGest.
+    \item \textbf{Add files via upload.} Archivo de bibliografía en formato BibTeX con las referencias utilizadas en el informe.
+    \item \textbf{Código generado de la clase Siembra.}
+    \item \textbf{Código generado de la clase SobrecargaSiembra.}
+    \item \textbf{Diapositivas de Exposición de la herramienta Modelio.}
+\end{itemize} &
+\begin{itemize}[leftmargin=*,nosep,itemsep=2pt]
+    \item \href{https://github.com/erizzov-boop/PFC-AquaGest-MDD-Equipo_D-/commit/733bd48c5aa8d644316a9d1d99432ee01166b8e6}{733bd48}
+    \item \href{https://github.com/erizzov-boop/PFC-AquaGest-MDD-Equipo_D-/commit/6b44903f906eb46bc1c1df2e47a9f55b36ffd855}{6b44903}
+    \item \href{https://github.com/erizzov-boop/PFC-AquaGest-MDD-Equipo_D-/commit/05ddb819f208bbfa3a87db02157e54e234072dba}{05ddb81}
+    \item \href{https://github.com/erizzov-boop/PFC-AquaGest-MDD-Equipo_D-/commit/b48b2c76bb84dee90b6d2e8c74deee80e02218c3}{b48b2c7}
+    \item \href{https://github.com/erizzov-boop/PFC-AquaGest-MDD-Equipo_D-/commit/11853614a42dd13a97bd3a23646500306fac05f4}{1185361}
+\end{itemize} \\
+
+\midrule
+
+% --- Crespo Espinoza Kleber Obed ---
+Crespo Espinoza Kleber Obed &
+\begin{itemize}[leftmargin=*,nosep,itemsep=2pt]
+    \item \textbf{Agregar secciones 3, 4 y 5 del informe.} Se incorporaron las subsecciones: 3. Descripción del subsistema del PFC modelado (contexto, actores, subsistema seleccionado, requisitos funcionales cubiertos, alcance del módulo); 4. Modelo UML de origen (origen de los datos, clases, diagrama de clases con sus relaciones, diagrama de casos de uso, diagrama de estados, estereotipos y perfiles, validación sintáctica y semántica, archivo nativo); 5. Configuración del mecanismo de generación (generador seleccionado, decisiones de mapeo modelo--código, archivos de configuración o plantilla).
+    \item \textbf{Código generado de clase Estanque.}
+    \item \textbf{Código generado de clase Grameo.}
+    \item \textbf{Agrega proyecto exportado desde Modelio.}
+    \item \textbf{Agrega conclusiones.} Se añaden las subsecciones 10.1 Valor del ciclo MDD para el PFC AquaGest; 10.2 Aprendizajes obtenidos; 10.3 Limitaciones.
+    
+\end{itemize} &
+\begin{itemize}[leftmargin=*,nosep,itemsep=2pt]
+    \item \href{https://github.com/erizzov-boop/PFC-AquaGest-MDD-Equipo_D-/commit/a4a0bf6ff8b658e6f0d7d01a9128421c529fd1d2}{a4a0bf6}
+    \item \href{https://github.com/erizzov-boop/PFC-AquaGest-MDD-Equipo_D-/commit/fc1e8f6ff10e38bdcaa99779135dcf219c0f6b7d}{fc1e8f6}
+    \item \href{https://github.com/erizzov-boop/PFC-AquaGest-MDD-Equipo_D-/commit/ade5550524638a1ac49a4ffe7a938a1661368262}{ade5550}
+    \item \href{https://github.com/erizzov-boop/PFC-AquaGest-MDD-Equipo_D-/commit/b6ac964680bba44dc6c075c1e8dca8900d95ab84}{b6ac964}
+    \item \href{https://github.com/erizzov-boop/PFC-AquaGest-MDD-Equipo_D-/commit/34845d35ca3f3a1a1ebe81cd3643d88c017e6e39}{34845d3}
+\end{itemize} \\
+
+\midrule
+
+% --- Rizzo Vélez Edson Nagib ---
+Rizzo Vélez Edson Nagib &
+\begin{itemize}[leftmargin=*,nosep,itemsep=2pt]
+    \item \textbf{Agregar sección 6, 7, 8 y 9.} Junto con las secciones adjuntadas también se agregaron las figuras usadas respectivamente en estas.
+    \item \textbf{Código generado de la clase AlertaCrecimiento.}
+    \item \textbf{Código generado de la clase Empleado.}
+    \item \textbf{Update readme.} Se actualiza el archivo \texttt{modelo/perfiles/readme} indicando que no se utilizaron perfiles.
+    \item \textbf{Agregar video demostrativo.} Se añade el archivo \texttt{evidencias/video-demo.mp4}.
+    \item \textbf{Update readme.}
+    \item \textbf{Update README.md.}
+    \item \textbf{Update readme no se usaron plantillas.} Descripción del uso de plantillas.
+\end{itemize} &
+\begin{itemize}[leftmargin=*,nosep,itemsep=2pt]
+    \item \href{https://github.com/erizzov-boop/PFC-AquaGest-MDD-Equipo_D-/commit/4004abddd626857ddcc8d418f9c7ef1a36a638d6}{4004abd}
+    \item \href{https://github.com/erizzov-boop/PFC-AquaGest-MDD-Equipo_D-/commit/d038efa7f5951c64e846ba8c8aea5a2c17b7d7ea}{d038efa}
+    \item \href{https://github.com/erizzov-boop/PFC-AquaGest-MDD-Equipo_D-/commit/5f2600cfd15a637b67cd662eee6f198a3014f253}{5f2600c}
+    \item \href{https://github.com/erizzov-boop/PFC-AquaGest-MDD-Equipo_D-/commit/6cd895bc7a4abd72daffeaf900c7b995d1aa9fe1}{6cd895b}
+    \item \href{https://github.com/erizzov-boop/PFC-AquaGest-MDD-Equipo_D-/commit/714de4a616b28aa90208116057237273ccc0f9f8}{714de4a}
+    \item \href{https://github.com/erizzov-boop/PFC-AquaGest-MDD-Equipo_D-/commit/1c8bac3e1705e6a99e8a3254a9cbc985ae59c9e1}{1c8bac3}
+    \item \href{https://github.com/erizzov-boop/PFC-AquaGest-MDD-Equipo_D-/commit/f52e82325b3fcdbb94d24648461c7dce836de557}{f52e823}
+    \item \href{https://github.com/erizzov-boop/PFC-AquaGest-MDD-Equipo_D-/commit/dbbd3ab99325e0459107ef74bf4304efb6380663}{dbbd3ab}
+\end{itemize} \\
+
 \bottomrule
 \end{tabularx}
-\end{center}
+
+
 
 
 
@@ -897,7 +959,7 @@ código generado (por ejemplo, a colecciones \texttt{List<...>} en el extremo
 generación \textit{forward} y un \textit{roundtrip} de un único ciclo (un
 cambio, una regeneración); no se evaluó el comportamiento del generador ante
 cambios más complejos o simultáneos en varias clases a la vez.
-
+\newpage
 % ======================= REFERENCIAS =======================
 \addcontentsline{toc}{section}{Referencias}
 \bibliographystyle{ieeetr}
