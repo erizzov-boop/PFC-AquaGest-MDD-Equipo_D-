@@ -281,6 +281,295 @@ disponible para completar el ciclo MDD dentro del cronograma de la actividad.
 
 
 
+% ======================= DESCRIPCIÓN DEL SUBSISTEMA =======================
+\section{Descripción del subsistema del PFC modelado}
+\label{sec:descripcion-subsistema}
+
+\subsection{Contexto}
+AquaGest es el sistema de información del Proyecto Fin de Curso (PFC) desarrollado
+para la Compañía Biofina (Camaronera El Guasmo), destinado a reemplazar el registro
+manual en papel de las actividades productivas por una plataforma web con captura de
+datos vía sensores IoT y un módulo de inteligencia artificial para análisis
+predictivo \cite{aquagest2026}. El sistema completo abarca diez módulos funcionales
+(Gestión de Estanques, Control de Siembras, Monitoreo del Agua, Alimentación,
+Historial Sanitario, Gestión de Empleados, Inventario, Mantenimiento, Gestión de
+Cosechas, Reportes e Inteligencia Artificial), con 25 requisitos funcionales
+formalizados (RF-01 a RF-25).
+
+\subsection{Actores involucrados en el subsistema}
+\begin{itemize}[leftmargin=1.5em]
+    \item \textbf{Administrador / Coordinador:} registra estanques, da de alta al
+    personal y valida la capacidad de siembra.
+    \item \textbf{Operario de Producción:} registra cada siembra (fecha, cantidad
+    de larvas, proveedor, responsable) y las sobrecargas controladas cuando
+    corresponden.
+    \item \textbf{Técnico Acuícola:} registra los grameos semanales de seguimiento
+    del crecimiento del camarón y da seguimiento a las alertas de crecimiento.
+\end{itemize}
+
+\subsection{Subsistema seleccionado: Control de Estanques, Siembras y Seguimiento}
+Se selecciona como subsistema representativo \textbf{Control de Estanques,
+Siembras y Seguimiento}, base operativa del resto del ciclo productivo
+(monitoreo de agua, alimentación, sanidad y cosecha dependen de que exista un
+estanque con siembra activa). Cubre el ciclo completo: registro de la piscina y
+cálculo de capacidad, registro formal de cada siembra y su responsable,
+seguimiento semanal de crecimiento, con sus dos mecanismos de control -- registro
+de sobrecargas autorizadas y generación de alertas ante crecimiento inferior al
+esperado.
+
+\subsubsection{Requisitos funcionales cubiertos}
+\begin{center}
+\begin{tabularx}{\linewidth}{lX}
+\toprule
+\textbf{ID} & \textbf{Descripción resumida} \\
+\midrule
+RF-01 & Registro de estanque (ID, nombre, superficie en hectáreas, estado). \\
+RF-02 & Cálculo de la capacidad máxima de siembra según la superficie del estanque. \\
+RF-03 & Registro de sobrecarga controlada de siembra con justificación. \\
+RF-04 & Actualización del estado del estanque (activo, preparación, cosecha,
+inactivo). \\
+RF-05 & Registro de siembra (fecha, cantidad de larvas, tipo, laboratorio,
+responsable). \\
+RF-06 & Registro de grameo semanal (peso promedio, fecha, observaciones). \\
+RF-07 & Historial de crecimiento del camarón por ciclo productivo. \\
+RF-08 & Alerta de crecimiento inferior al esperado. \\
+RF-17 & Registro de empleados (nombre, cédula, cargo, rol, fecha de ingreso),
+como responsables de las siembras del subsistema. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Alcance del módulo modelado en esta demostración}
+El alcance de la demostración comprende las seis clases de dominio del
+subsistema Control de Estanques, Siembras y Seguimiento (\texttt{Estanque},
+\texttt{Siembra}, \texttt{Empleado}, \texttt{SobrecargaSiembra},
+\texttt{Grameo}, \texttt{AlertaCrecimiento}), junto con sus atributos,
+operaciones derivadas de los RF anteriores y sus relaciones de asociación,
+agregación y composición (ver detalle en la Sección \ref{sec:modelo-uml}).
+Quedan fuera del alcance de esta demostración puntual el resto de módulos
+(Monitoreo del Agua, Alimentación, Historial Sanitario más allá de lo ya
+cubierto, Inventario, Mantenimiento, Cosecha, Reportes e Inteligencia
+Artificial), ya descritos en el ERS del PFC pero fuera del subsistema elegido
+para esta actividad.
+
+
+
+% ======================= MODELO UML DE ORIGEN =======================
+\section{Modelo UML de origen}
+\label{sec:modelo-uml}
+
+\subsection{Origen de los datos del modelo}
+Los atributos y operaciones de las clases presentadas a continuación se derivan
+directamente de los campos de \textit{Entradas} y \textit{Salidas} ya
+especificados para RF-01 a RF-08 y RF-17 en la ERS de AquaGest
+\cite{aquagest2026}, y de las multiplicidades base ya documentadas en la Tabla 19
+(``Relaciones principales y multiplicidad'') de ese mismo documento. El diagrama
+de clases es, por tanto, una proyección UML consistente con requisitos ya
+validados, elaborada como paso previo (blueprint) al modelado dentro de la
+herramienta Modelio.
+
+\subsection{Clases del subsistema}
+El subsistema Control de Estanques, Siembras y Seguimiento se modela con seis
+clases:
+
+\begin{center}
+\begin{tabularx}{\linewidth}{lX}
+\toprule
+\textbf{Clase} & \textbf{Responsabilidad dentro del subsistema} \\
+\midrule
+\texttt{Estanque} & Piscina de cultivo: identificación, superficie y estado
+operativo (RF-01, RF-02, RF-04). \\
+\texttt{Siembra} & Ciclo de siembra iniciado en un estanque: fecha, cantidad de
+larvas, laboratorio de origen (RF-05). \\
+\texttt{Empleado} & Responsable que ejecuta y registra una siembra (RF-17). \\
+\texttt{SobrecargaSiembra} & Registro de una sobrecarga autorizada sobre una
+siembra, con su justificación (RF-03). \\
+\texttt{Grameo} & Medición semanal de peso promedio del camarón dentro de una
+siembra (RF-06, RF-07). \\
+\texttt{AlertaCrecimiento} & Alerta generada cuando un grameo muestra un
+crecimiento inferior al esperado (RF-08). \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Diagrama de clases de origen}
+\label{sec:diagrama-clases}
+
+\begin{figure}[h!]
+   \centering
+   \includegraphics[width=0.6\linewidth]{figuras/ControlEstanquesSiembras Class diagram.png}
+   \caption{Diagrama de clases de origen del subsistema Control de Estanques,
+   Siembras y Seguimiento, exportado desde Modelio.}
+  \label{fig:clases-origen}
+ \end{figure}
+
+El siguiente diagrama de clases corresponde al modelo UML desarrollado en
+Modelio y utilizado como base para la generación automática de código.
+Previamente se verificó la consistencia del modelo, incluyendo la correcta
+nomenclatura de todas las clases, garantizando que el código generado refleje
+fielmente el diseño conceptual.
+\subsubsection{Relaciones}
+\begin{center}
+\begin{tabularx}{\linewidth}{lXl}
+\toprule
+\textbf{Relación} & \textbf{Multiplicidad} & \textbf{Tipo} \\
+\midrule
+Estanque -- Siembra & 1 a 0..* & Asociación \\
+Siembra -- Empleado (responsables) & 1 a 0..* & Asociación \\
+Siembra -- SobrecargaSiembra & 1 a 0..* & Agregación \\
+Siembra -- Grameo & 1 a 0..* & Asociación \\
+Grameo -- AlertaCrecimiento & 1 a 0..1 & Composición \\
+\bottomrule
+\end{tabularx}
+\end{center}
+Las multiplicidades de \texttt{Estanque}--\texttt{Siembra} y
+\texttt{Siembra}--\texttt{Grameo} provienen directamente de la Tabla 19 del ERS;
+el resto son una propuesta del equipo, a validar y ajustar dentro de Modelio si
+la herramienta o el criterio del equipo sugieren un cambio.
+
+\subsection{Diagrama de casos de uso (complementario)}
+\label{sec:casos-uso}
+El siguiente diagrama de casos de uso fue elaborado en Modelio 5.4 y representa las principales funcionalidades del subsistema, así como la interacción entre los actores y el sistema. Este diagrama complementa el modelo de clases al mostrar los procesos que cada tipo de usuario puede ejecutar, proporcionando una visión funcional del sistema antes de la generación automática de código.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.62\linewidth]{figuras/project1 Use Case diagram.png}
+    \caption{Diagrama de casos de uso del subsistema Control de Estanques y
+    Siembras, elaborado en Modelio 5.4. Los tres actores corresponden a los
+    descritos en la Sección \ref{sec:descripcion-subsistema}.}
+\label{fig:casos-uso}
+\end{figure}
+
+\textbf{Nota:} Debido a que Modelio 5.4 no ofrece un elemento específico para representar el límite del sistema (Subject) en los diagramas de casos de uso, este se representó mediante un rectángulo de dibujo. Esta representación es únicamente gráfica y no altera la estructura ni el significado del modelo UML.
+
+\subsection{Diagrama de estados (complementario)}
+\label{sec:diagrama-estados}
+El siguiente diagrama de estados fue elaborado en Modelio 5.4 y representa el ciclo de vida de la clase \textbf{Estanque}, mostrando las transiciones entre sus diferentes estados de acuerdo con los eventos definidos para el subsistema. Este diagrama complementa el modelo estructural al describir el comportamiento dinámico de la entidad durante su operación.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.65\linewidth]{figuras/State Machine State Machine diagram.png}
+    \caption{Diagrama de estados de la clase \texttt{Estanque}, elaborado en
+    Modelio 5.4. Las transiciones representan el ciclo de vida definido para el
+    subsistema Control de Estanques y Siembras, en concordancia con el
+    requisito funcional RF-04.}
+    \label{fig:diagrama-estados}
+\end{figure}
+
+
+\subsection{Estereotipos y perfiles a aplicar}
+Esta actividad genera \textbf{clases Java estándar (POJOs)}, sin persistencia:
+no se usa JPA, Hibernate ni ningún ORM. Con ese alcance, el equipo creó dos
+\textbf{estereotipos locales} dentro del proyecto Modelio (no importados de un
+perfil externo): \verb|<<Entity>>|, aplicado a las seis clases del subsistema
+para marcarlas como objetos de dominio con identidad propia, y \verb|<<Id>>|,
+aplicado sobre el atributo que identifica a cada instancia dentro del modelo.
+Adicionalmente, se aplicó a cada clase el estereotipo \verb|<<JavaElement>>|
+requerido por el módulo Java Designer para que la clase sea reconocida como
+candidata a generación de código Java.
+
+
+
+\subsection{Validación sintáctica y semántica del modelo}
+El diagrama de clases se validó dentro de Modelio mediante el panel de auditoría
+del modelo (\textit{Model check}), obteniendo \textbf{0 errores y 0
+advertencias} sobre las seis clases y sus relaciones (Figura
+\ref{fig:validacion-modelo}). 
+\begin{figure}[h!]
+   \centering
+   \includegraphics[width=0.8\linewidth]{figuras/Diagrama_Clases_Validacion_Sinerrores_Modelio.png}
+   \caption{Panel de validación de Modelio sobre el diagrama de clases del
+   subsistema: 0 errores y 0 advertencias.}
+  \label{fig:validacion-modelo}
+ \end{figure}
+\subsection{Archivo nativo del modelo}
+\label{sec:archivo-nativo}
+El proyecto nativo de Modelio se exportó como archivo de proyecto
+(\texttt{File > Export project}) y se subió a la carpeta \texttt{modelo/} del
+repositorio de la actividad:
+\begin{center}
+\texttt{modelo/AquaGest\_ControlSiembras.zip}
+\end{center}
+Para reutilizarlo, debe importarse dentro de Modelio con
+\texttt{File > Import Project...} (no descomprimirse manualmente).
+
+% ======================= CONFIGURACIÓN DEL GENERADOR =======================
+\section{Configuración del mecanismo de generación}
+\label{sec:configuracion}
+
+\subsection{Generador seleccionado}
+Se utiliza el módulo de generación de código Java integrado en Modelio
+(\textit{Modelio Java Designer} / \textit{Modelio SD Java}), que produce código
+Java estándar directamente desde el diagrama de clases UML y mantiene la
+sincronización modelo-código en modo dirigido por modelo o \textit{round-trip}
+\cite{modelio_sd_java}. El alcance es la generación de \textbf{clases Java
+estándar (POJOs)}, sin persistencia (no se usa JPA/Hibernate ni ningún ORM), en
+coherencia con la justificación de la herramienta (Sección
+\ref{sec:justificacion}).
+
+\begin{center}
+\begin{tabularx}{\linewidth}{lX}
+\toprule
+\textbf{Parámetro} & \textbf{Valor} \\
+\midrule
+Generador / módulo & Modelio Java Designer (módulo oficial) -- versión: 5.4 \\
+Lenguaje objetivo & Java \\
+Directorio de salida & \texttt{MODELIOJAVA} (carpeta local generada por el módulo
+Java Designer; ruta completa dentro del equipo de trabajo, sin persistencia
+adicional configurada) \\
+Convención de nombres & \textit{PascalCase} para clases (confirmado: \texttt{
+Estanque.java}, \texttt{SobrecargaSiembra.java}, etc.), \textit{camelCase} para
+atributos -- observado directamente en el código generado (Sección
+\ref{sec:verificacion}) \\
+Política ante regeneración & El código se \textbf{sobrescribe por completo} en
+cada generación: Modelio Java Designer no implementa bloques de código protegido
+(\textit{protected regions}) en este módulo, por lo que no preserva
+automáticamente la lógica de negocio agregada manualmente entre una generación y
+la siguiente. Confirmado al ejecutar el \textit{roundtrip} controlado (Sección
+\ref{sec:roundtrip}). \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Decisiones de mapeo modelo--código previstas}
+\begin{center}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{5cm}X}
+\toprule
+\textbf{Elemento del modelo} & \textbf{Mapeo esperado en Java} \\
+\midrule
+Clase \texttt{Estanque}, \texttt{Siembra}, \texttt{Grameo} & Clase Java pública
+(\texttt{public class}) con el mismo nombre. \\
+Atributo tipado con \texttt{double} (p. ej. \texttt{tamanoHa: double}) & Campo
+privado Java (\texttt{private double tamanoHa}). La documentación del módulo
+Java Designer indica que puede generar accesores \texttt{get}/\texttt{set}
+automáticamente, aunque no se observaron en las clases inspeccionadas (Sección
+\ref{sec:verificacion}). Si en la verificación se detecta que algún cálculo
+requiere precisión exacta (p. ej. costos), se ajustará manualmente a
+\texttt{BigDecimal} tras la generación. \\
+Asociación Estanque--Siembra (1 a 0..*) & Colección tipada en el lado ``0..*''
+(\texttt{private List<Siembra> siembras}) y referencia simple en el lado ``1''. \\
+Operación (p. ej. \texttt{calcularCapacidadMaxima()}) & Firma de método Java
+generada desde la operación UML; el cuerpo del método debe completarse manualmente
+tras la generación, ya que la lógica de negocio no forma parte del modelo
+estructural. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Estas decisiones de mapeo son la interpretación esperada según el comportamiento
+documentado del generador de Modelio; deberán confirmarse o corregirse con la
+evidencia real observada en la Fase 4 del procedimiento, y las eventuales
+correcciones deben incorporarse a esta tabla.
+
+\subsection{Archivos de configuración o plantilla}
+Para esta actividad \textbf{no se editó ni personalizó} la plantilla estándar
+del módulo Java Designer: se utilizó el generador tal como lo distribuye
+Modelio, sin modificar sus reglas internas de mapeo modelo--código. Por esta
+razón, la carpeta \texttt{plantillas/} del repositorio no contiene archivos de
+plantilla personalizados. Si en una futura iteración del PFC se decide
+personalizar la plantilla (por ejemplo, para incorporar anotaciones JPA), esta
+subsección deberá actualizarse.
+
 
 
 % ======================= REFERENCIAS =======================
