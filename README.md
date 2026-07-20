@@ -17,9 +17,7 @@ El sistema completo abarca diez módulos funcionales: Gestión de Estanques, Con
 **Actores involucrados:**
 
 - **Administrador/Coordinador:** Registra estanques, da de alta al personal y valida la capacidad de siembra.
-- 
 - **Operario de Producción:** Registra cada siembra (fecha, cantidad de larvas, proveedor, responsable) y las sobrecargas controladas.
-- 
 - **Técnico Acuícola:** Registra los grameos semanales de seguimiento del crecimiento y da seguimiento a las alertas.
 
 **Qué cubre el ciclo de negocio:** Desde el registro de la piscina y el cálculo de su capacidad máxima, pasando por el registro formal de cada siembra y su responsable, hasta el seguimiento semanal del crecimiento del camarón — con sus dos mecanismos de control: el registro de sobrecargas autorizadas cuando la siembra excede la capacidad nominal, y la generación de alertas cuando el crecimiento observado se aparta del esperado.
@@ -123,7 +121,7 @@ El video demostrativo se encuentra en:
 evidencias/video-demo.mp4
 ```
 
-Link del video:
+Link del video: https://youtu.be/nqC775C5jXs
 
 ---
 
